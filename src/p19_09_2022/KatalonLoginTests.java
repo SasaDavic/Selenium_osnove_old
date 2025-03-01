@@ -6,6 +6,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
@@ -66,10 +67,13 @@ public class KatalonLoginTests {
 		WebElement password = driver.findElement(By.xpath("//input[@id='password']"));
 		Assert.assertEquals(password.getAttribute("type"),
 				"password",
-				"Atrribute type it's not the same!");
+				"Invalid password input type!");
+		Assert.assertEquals(driver.findElement(By.id("username")).getAttribute("type"),
+				"text",
+				"Invalid username input type!");
 		Assert.assertEquals(driver.findElement(By.id("rememberme")).getAttribute("type"),
 				"checkbox",
-				"Type is not checkbox!");
+				"Invalid rememberme input type!");
 		Assert.assertTrue(!driver.findElement(By.id("rememberme")).isSelected(), 
 				"The chechkbox is selected");
 		
@@ -82,9 +86,15 @@ public class KatalonLoginTests {
 		driver.findElement(By.id("username")).sendKeys("invalidemail@gmail.com");
 		driver.findElement(By.id("password")).sendKeys("invalid123");
 		driver.findElement(By.name("login")).click();
+				
+		//trazenje elementa je takodje vid validacije
+		wait.until(
+				ExpectedConditions.presenceOfElementLocated(
+						By.className("woocommerce-error")));
 		Assert.assertEquals(driver.findElement(By.xpath("//*[contains(@class, 'entry-content')]/div/div/ul/li")).getText(),
 				"Unknown email address. Check again or try your username.",
 				"Not expected message");
+		
 		
 		Assert.assertTrue(driver.getCurrentUrl().contains("/my-account"), 
 				"We are not on my account page!");
