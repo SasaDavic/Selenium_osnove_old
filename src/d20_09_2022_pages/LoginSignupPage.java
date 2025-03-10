@@ -40,6 +40,7 @@ public class LoginSignupPage {
 		return driver.findElement(By.xpath("//*[@data-qa='signup-button']"));
 	}
 	
+	
 	public void waitForAccountToBeCreated() {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
 		wait.until(ExpectedConditions.textToBe(By.xpath("//*[contains(@class, 'title')]/b"), "ACCOUNT CREATED!"));

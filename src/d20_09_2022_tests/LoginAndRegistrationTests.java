@@ -54,11 +54,39 @@ public class LoginAndRegistrationTests extends AutomationPracticeBasicTests{
 		login_signup_page.waitForAccountToBeCreated();
 		driver.findElement(By.xpath("//*[@data-qa='continue-button']")).click();
 		//brisemo nalog
-		navPage.getDeleteAccountLink().click();
-		login_signup_page.waitForAccountToBeDeleted();
+	//	navPage.getDeleteAccountLink().click();
+	//	login_signup_page.waitForAccountToBeDeleted();
 		
-		
-		
+		//da bismo nastavili drugi test, ako ne brisemo naloga onda se izlogujemo
+		navPage.getLogoutLink().click();
+		navPage.waitUntilUserIsLogOut();
 	}
+	
+	@Test (priority = 20)
+	public void loginUserWithCorrectEmailAndPassword() {
+	//Verify that home page is visible successfully
+		Assert.assertEquals(driver.getCurrentUrl(), 
+				"https://www.automationexercise.com/",
+				"You are not on right page!");		
+	//Click on 'Signup / Login' button
+		navPage.getSignupLoginLink().click();
+	//Verify 'Login to your account' is visible
+		Assert.assertEquals(driver.findElement(By.xpath("//*[contains(@class, 'login-form')]/h2")).getText(),
+				"Login to your account",
+				"There is no Log in form!");
+	//Enter correct email address and password
+		login_signup_page.getLoginEmailInput().sendKeys("sasa@gmail.com");
+		login_signup_page.getLoginPasswordInput().sendKeys("a123");		
+	//Click 'login' button
+		login_signup_page.getLoginButton().click();
+	//Verify that 'Logged in as username' is visible
+		navPage.waitUntilUserIsLogIn();
+	//Click 'Delete Account' button
+		navPage.getDeleteAccountLink().click();
+	//Verify that 'ACCOUNT DELETED!' is visible
+		login_signup_page.waitForAccountToBeDeleted();
+	}
+	
+	
 	
 }

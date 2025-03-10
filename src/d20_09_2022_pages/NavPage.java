@@ -1,8 +1,12 @@
 package d20_09_2022_pages;
 
+import java.time.Duration;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class NavPage {
 
@@ -10,6 +14,15 @@ public class NavPage {
 
 	public NavPage(WebDriver driver) {
 		this.driver = driver;
+	}
+	public void waitUntilUserIsLogOut() {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.partialLinkText("Signup / Login")));
+	}
+	
+	public void waitUntilUserIsLogIn() {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.partialLinkText("Logged in as")));
 	}
 	
 	public WebElement getHomeLink() {
