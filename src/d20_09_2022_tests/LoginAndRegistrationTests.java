@@ -87,6 +87,32 @@ public class LoginAndRegistrationTests extends AutomationPracticeBasicTests{
 		login_signup_page.waitForAccountToBeDeleted();
 	}
 	
-	
+	@Test (priority = 30)
+	public void loginUserWithIncorrectEmailAndPassword() {
+// Launch browser
+// Navigate to url 'http://automationexercise.com'
+// Verify that home page is visible successfully
+		Assert.assertEquals(driver.getCurrentUrl(), 
+				"https://www.automationexercise.com/",
+				"You are not on right page!");		
+// Click on 'Signup / Login' button
+		navPage.getSignupLoginLink().click();
+// Verify 'Login to your account' is visible
+		Assert.assertEquals(driver.findElement(By.xpath("//*[contains(@class, 'login-form')]/h2")).getText(),
+				"Login to your account",
+				"There is no Log in form!");
+// Enter incorrect email address and password
+		login_signup_page.getLoginEmailInput().sendKeys("lin@sin.ik");
+		login_signup_page.getLoginPasswordInput().sendKeys("linSin");
+// Click 'login' button
+		login_signup_page.getLoginButton().click();
+// Verify error 'Your email or password is incorrect!' is visible
+		Assert.assertEquals(login_signup_page.getErrorMessageForFailedLogin(), 
+				"Your email or password is incorrect!", 
+				"There is no error message");
+		
+		
+		
+	}
 	
 }

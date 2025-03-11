@@ -50,4 +50,8 @@ public class LoginSignupPage {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
 		wait.until(ExpectedConditions.textToBe(By.xpath("//*[contains(@class, 'title')]/b"), "ACCOUNT DELETED!"));
 	}
+	
+	public String getErrorMessageForFailedLogin() {
+		return driver.findElement(By.className("login-form")).findElement(By.xpath("//p")).getText();
+	}
 }
