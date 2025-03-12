@@ -110,9 +110,35 @@ public class LoginAndRegistrationTests extends AutomationPracticeBasicTests{
 		Assert.assertEquals(login_signup_page.getErrorMessageForFailedLogin(), 
 				"Your email or password is incorrect!", 
 				"There is no error message");
+	}
+	
+	@Test (priority = 15)
+	public void logoutUser() {
 		
-		
-		
+// Launch browser
+// Navigate to url 'http://automationexercise.com'
+// Verify that home page is visible successfully
+  Assert.assertEquals(driver.getCurrentUrl(), 
+				"https://www.automationexercise.com/",
+				"You are not on right page!");
+// Click on 'Signup / Login' button
+  navPage.getSignupLoginLink().click();
+// Verify 'Login to your account' is visible
+  Assert.assertEquals(driver.findElement(By.xpath("//*[contains(@class, 'login-form')]/h2")).getText(),
+			"Login to your account",
+			"There is no Log in form!");
+// Enter correct email address and password
+  login_signup_page.getLoginEmailInput().sendKeys("sasa@gmail.com");
+  login_signup_page.getLoginPasswordInput().sendKeys("a123");
+// Click 'login' button
+  login_signup_page.getLoginButton().click();
+// Verify that 'Logged in as username' is visible
+  navPage.waitUntilUserIsLogIn();
+// Click 'Logout' button
+  navPage.getLogoutLink().click();
+// Verify that user is navigated to login page
+  Assert.assertEquals(driver.getCurrentUrl(), "https://www.automationexercise.com/login", "You are not on log in page!");
+		 
 	}
 	
 }
