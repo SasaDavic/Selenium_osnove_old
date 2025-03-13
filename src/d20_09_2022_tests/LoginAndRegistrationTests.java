@@ -28,9 +28,7 @@ public class LoginAndRegistrationTests extends AutomationPracticeBasicTests{
 		signup_page.getGenderTitleMRSInput().click();
 		signup_page.getNameInput().clear();
 		signup_page.getNameInput().sendKeys("Cale");
-//mail moze da se unese samo prvi put - greska ili namerno da se mail ne duplira!!!
-//		signup_page.getEmailInput().clear();
-//		signup_page.getEmailInput().sendKeys("cale@gmail.com");
+//mail moze da se unese samo preko prethode forme
 		signup_page.getPasswordInput().clear();
 		signup_page.getPasswordInput().sendKeys("a123");
 		Select selectD = new Select(signup_page.getDaysSelect());
@@ -61,6 +59,36 @@ public class LoginAndRegistrationTests extends AutomationPracticeBasicTests{
 		navPage.getLogoutLink().click();
 		navPage.waitUntilUserIsLogOut();
 	}
+	
+	@Test (priority = 15)
+	public void logoutUser() {
+		
+// Launch browser
+// Navigate to url 'http://automationexercise.com'
+// Verify that home page is visible successfully
+  Assert.assertEquals(driver.getCurrentUrl(), 
+				"https://www.automationexercise.com/",
+				"You are not on right page!");
+// Click on 'Signup / Login' button
+  navPage.getSignupLoginLink().click();
+// Verify 'Login to your account' is visible
+  Assert.assertEquals(driver.findElement(By.xpath("//*[contains(@class, 'login-form')]/h2")).getText(),
+			"Login to your account",
+			"There is no Log in form!");
+// Enter correct email address and password
+  login_signup_page.getLoginEmailInput().sendKeys("sasa@gmail.com");
+  login_signup_page.getLoginPasswordInput().sendKeys("a123");
+// Click 'login' button
+  login_signup_page.getLoginButton().click();
+// Verify that 'Logged in as username' is visible
+  navPage.waitUntilUserIsLogIn();
+// Click 'Logout' button
+  navPage.getLogoutLink().click();
+// Verify that user is navigated to login page
+  Assert.assertEquals(driver.getCurrentUrl(), "https://www.automationexercise.com/login", "You are not on log in page!");
+	 
+	}
+	
 	
 	@Test (priority = 20)
 	public void loginUserWithCorrectEmailAndPassword() {
@@ -112,33 +140,29 @@ public class LoginAndRegistrationTests extends AutomationPracticeBasicTests{
 				"There is no error message");
 	}
 	
-	@Test (priority = 15)
-	public void logoutUser() {
-		
-// Launch browser
-// Navigate to url 'http://automationexercise.com'
-// Verify that home page is visible successfully
-  Assert.assertEquals(driver.getCurrentUrl(), 
-				"https://www.automationexercise.com/",
-				"You are not on right page!");
-// Click on 'Signup / Login' button
-  navPage.getSignupLoginLink().click();
-// Verify 'Login to your account' is visible
-  Assert.assertEquals(driver.findElement(By.xpath("//*[contains(@class, 'login-form')]/h2")).getText(),
-			"Login to your account",
-			"There is no Log in form!");
-// Enter correct email address and password
-  login_signup_page.getLoginEmailInput().sendKeys("sasa@gmail.com");
-  login_signup_page.getLoginPasswordInput().sendKeys("a123");
-// Click 'login' button
-  login_signup_page.getLoginButton().click();
-// Verify that 'Logged in as username' is visible
-  navPage.waitUntilUserIsLogIn();
-// Click 'Logout' button
-  navPage.getLogoutLink().click();
-// Verify that user is navigated to login page
-  Assert.assertEquals(driver.getCurrentUrl(), "https://www.automationexercise.com/login", "You are not on log in page!");
-		 
+
+	
+	
+	@Test (priority = 17)
+	public void registerUserWithExistingEmail() {
+		//provera da li smo na HOME page
+				Assert.assertEquals(driver.getTitle(), "Automation Exercise", "You're not on home page!");
+				//iz navigacionog menija kliknemo na signup dugme
+				navPage.getSignupLoginLink().click();
+				//provera da li smo na login/signup stranici
+				Assert.assertEquals(driver.findElement(By.xpath("//*[contains(@class, 'signup-form')]/h2")).getText(),
+						"New User Signup!",
+						"There is no signUp form!");
+				//popunimo formu
+				login_signup_page.getSignupNameInput().sendKeys("sasa");
+				login_signup_page.getSignupEmailInput().sendKeys("sasa@gmail.com");
+				login_signup_page.getSignupButton().click();
+				Assert.assertEquals(login_signup_page.getErrorMessageForExistingEmail(), 
+						"Email Address already exist!", 
+						"Didn't get error as expected!");
 	}
+	
+	
+	
 	
 }

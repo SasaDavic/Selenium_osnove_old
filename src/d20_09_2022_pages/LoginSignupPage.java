@@ -54,4 +54,8 @@ public class LoginSignupPage {
 	public String getErrorMessageForFailedLogin() {
 		return driver.findElement(By.className("login-form")).findElement(By.xpath("//p")).getText();
 	}
+	
+	public String getErrorMessageForExistingEmail() {
+		return driver.findElement(By.xpath("//*[contains(@class, 'signup-form')]//p")).getText();
+	}
 }
