@@ -1,5 +1,8 @@
 package d20_09_2022_tests;
 
+import java.io.File;
+
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
@@ -7,7 +10,7 @@ import org.testng.annotations.Test;
 
 public class LoginAndRegistrationTests extends AutomationPracticeBasicTests{
 		
-	@Test (priority = 10)
+//	@Test (priority = 10)
 	public void newUserRegistration() {
 		//provera da li smo na HOME page
 		Assert.assertEquals(driver.getTitle(), "Automation Exercise", "You're not on home page!");
@@ -60,7 +63,7 @@ public class LoginAndRegistrationTests extends AutomationPracticeBasicTests{
 		navPage.waitUntilUserIsLogOut();
 	}
 	
-	@Test (priority = 15)
+//	@Test (priority = 15)
 	public void logoutUser() {
 		
 // Launch browser
@@ -90,7 +93,7 @@ public class LoginAndRegistrationTests extends AutomationPracticeBasicTests{
 	}
 	
 	
-	@Test (priority = 20)
+//	@Test (priority = 20)
 	public void loginUserWithCorrectEmailAndPassword() {
 	//Verify that home page is visible successfully
 		Assert.assertEquals(driver.getCurrentUrl(), 
@@ -115,7 +118,7 @@ public class LoginAndRegistrationTests extends AutomationPracticeBasicTests{
 		login_signup_page.waitForAccountToBeDeleted();
 	}
 	
-	@Test (priority = 30)
+//	@Test (priority = 30)
 	public void loginUserWithIncorrectEmailAndPassword() {
 // Launch browser
 // Navigate to url 'http://automationexercise.com'
@@ -141,9 +144,7 @@ public class LoginAndRegistrationTests extends AutomationPracticeBasicTests{
 	}
 	
 
-	
-	
-	@Test (priority = 17)
+//	@Test (priority = 17)
 	public void registerUserWithExistingEmail() {
 		//provera da li smo na HOME page
 				Assert.assertEquals(driver.getTitle(), "Automation Exercise", "You're not on home page!");
@@ -162,7 +163,37 @@ public class LoginAndRegistrationTests extends AutomationPracticeBasicTests{
 						"Didn't get error as expected!");
 	}
 	
-	
+	@Test (priority = 40)
+	public void contactUsForm() {
+	//		Launch browser
+	//  Navigate to url 'http://automationexercise.com'
+	//  Verify that home page is visible successfully
+		Assert.assertEquals(driver.getCurrentUrl(), 
+				"https://www.automationexercise.com/",
+				"You are not on right page!");
+	//  Click on 'Contact Us' button
+		navPage.getContactUsLink().click();
+	//  Verify 'GET IN TOUCH' is visible
+		contactUsPage.waitForContactUsPageToLoad();	
+	//  Enter name, email, subject and message
+		contactUsPage.getNameInput().sendKeys("Sale");
+		contactUsPage.getEmailInput().sendKeys("sale@mail.com");
+		contactUsPage.getSubjectInput().sendKeys("qa practise");
+		contactUsPage.getMessageInput().sendKeys("Page is great for learning. Tanks a lot!");
+	//  Upload file
+		File file = new File("img/lupa.jpeg");
+		contactUsPage.getUploadFileInput().sendKeys(file.getAbsolutePath());
+	//  Click 'Submit' button
+		contactUsPage.getSubmitInput().click();
+	//  Click OK button - Confirmation Box (Potvrdni Alert)
+		Alert alertBox = driver.switchTo().alert();
+		String alertText = alertBox.getText();
+		System.out.println("Text potvrdnog alerta je " + alertText);
+		alertBox.accept(); // kliknem ok
+		
+	//  Verify success message 'Success! Your details have been submitted successfully.' is visible
+		contactUsPage.waitForSubmittedSuccessfullyMessage();
+	}
 	
 	
 }

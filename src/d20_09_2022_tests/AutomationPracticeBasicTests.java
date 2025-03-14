@@ -10,6 +10,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 
+import d20_09_2022_pages.ContactUsPage;
 import d20_09_2022_pages.LoginSignupPage;
 import d20_09_2022_pages.NavPage;
 import d20_09_2022_pages.SignupPage;
@@ -23,6 +24,7 @@ public abstract class AutomationPracticeBasicTests {
 	protected NavPage navPage;
 	protected LoginSignupPage login_signup_page;
 	protected SignupPage signup_page;
+	protected ContactUsPage contactUsPage;
 	
 	@BeforeClass
 	public void setup() {
@@ -34,6 +36,7 @@ public abstract class AutomationPracticeBasicTests {
 		navPage = new NavPage(driver);
 		login_signup_page = new LoginSignupPage(driver);
 		signup_page = new SignupPage(driver);
+		contactUsPage = new ContactUsPage(driver);
 	}
 	
 	@BeforeMethod
