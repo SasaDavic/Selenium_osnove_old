@@ -163,7 +163,7 @@ public class LoginAndRegistrationTests extends AutomationPracticeBasicTests{
 						"Didn't get error as expected!");
 	}
 	
-	@Test (priority = 40)
+//	@Test (priority = 40)
 	public void contactUsForm() {
 	//		Launch browser
 	//  Navigate to url 'http://automationexercise.com'
@@ -194,6 +194,35 @@ public class LoginAndRegistrationTests extends AutomationPracticeBasicTests{
 	//  Verify success message 'Success! Your details have been submitted successfully.' is visible
 		contactUsPage.waitForSubmittedSuccessfullyMessage();
 	}
+	
+	@Test (priority = 50)
+	public void  verifyTestCasesPage() {
+// Launch browser
+// Navigate to url 'http://automationexercise.com'
+// Verify that home page is visible successfully
+		Assert.assertEquals(driver.getCurrentUrl(), 
+				"https://www.automationexercise.com/",
+				"You are not on right page!");	
+// Click on 'Test Cases' button
+		navPage.getTestCasesLink().click();
+// Verify user is navigated to test cases page successfully
+		Assert.assertEquals(driver.getCurrentUrl(), 
+				"https://www.automationexercise.com/test_cases", 
+				"You're not on test cases page");
+		Assert.assertEquals(testCasesPage.getTitleText(), 
+				"TEST CASES", 
+				"Title is not as expected!");	
+//click on random test case and check if list of tasks are shown
+		
+		testCasesPage.getTestCaseLink(5).click();
+		testCasesPage.waitForTasksForTestCasesToOpen(5);
+		
+		
+		
+	}
+	
+	
+	
 	
 	
 }

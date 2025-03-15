@@ -14,6 +14,7 @@ import d20_09_2022_pages.ContactUsPage;
 import d20_09_2022_pages.LoginSignupPage;
 import d20_09_2022_pages.NavPage;
 import d20_09_2022_pages.SignupPage;
+import d20_09_2022_pages.TestCasesPage;
 
 
 public abstract class AutomationPracticeBasicTests {
@@ -25,6 +26,7 @@ public abstract class AutomationPracticeBasicTests {
 	protected LoginSignupPage login_signup_page;
 	protected SignupPage signup_page;
 	protected ContactUsPage contactUsPage;
+	protected TestCasesPage testCasesPage;
 	
 	@BeforeClass
 	public void setup() {
@@ -37,6 +39,7 @@ public abstract class AutomationPracticeBasicTests {
 		login_signup_page = new LoginSignupPage(driver);
 		signup_page = new SignupPage(driver);
 		contactUsPage = new ContactUsPage(driver);
+		testCasesPage = new TestCasesPage(driver);
 	}
 	
 	@BeforeMethod
