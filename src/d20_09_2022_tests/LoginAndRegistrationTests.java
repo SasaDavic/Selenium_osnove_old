@@ -4,6 +4,7 @@ import java.io.File;
 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -195,7 +196,7 @@ public class LoginAndRegistrationTests extends AutomationPracticeBasicTests{
 		contactUsPage.waitForSubmittedSuccessfullyMessage();
 	}
 	
-	@Test (priority = 50)
+//	@Test (priority = 50)
 	public void  verifyTestCasesPage() {
 // Launch browser
 // Navigate to url 'http://automationexercise.com'
@@ -221,7 +222,40 @@ public class LoginAndRegistrationTests extends AutomationPracticeBasicTests{
 		
 	}
 	
-	
+	@Test (priority = 50)
+	public void verifyAllProductsAndProductDetailPage() {
+// Launch browser
+// Navigate to url 'http://automationexercise.com'
+// Verify that home page is visible successfully
+		Assert.assertEquals(driver.getCurrentUrl(), 
+				"https://www.automationexercise.com/",
+				"You're not on home page");
+// Click on 'Products' button
+		navPage.getProductsLink().click();
+// Verify user is navigated to ALL PRODUCTS page successfully
+		Assert.assertEquals(driver.getCurrentUrl(), 
+				"https://www.automationexercise.com/products",
+				"You're not on products page. Url is not as expected!");
+		Assert.assertEquals(driver.getTitle(), 
+				"Automation Exercise - All Products",
+				"You're not on products page. Title is not as expected!");
+		Assert.assertEquals(productsPage.getProductsTitleText(), 
+				"ALL PRODUCTS",
+				"You're not on products page. Title above products is not as expected!");
+// The products list is visible
+		productsPage.waitUntilProductsListIsVisible();
+// Click on 'View Product' of first product
+		productsPage.getViewProductLink(0).click();
+// User is landed to product detail page
+		Assert.assertTrue(driver.getCurrentUrl().contains("/product_details"), "You're not on product details page!");
+// Verify that detail detail is visible: product name, category, price, availability, condition, brand
+		Assert.assertTrue(productDetailsPage.isProductNameVisible(), "Product name is not visible");
+        Assert.assertTrue(productDetailsPage.isCategoryVisible(), "Category is not visible");
+        Assert.assertTrue(productDetailsPage.isPriceVisible(), "Price is not visible");
+        Assert.assertTrue(productDetailsPage.isAvailabilityVisible(), "Availability is not visible");
+        Assert.assertTrue(productDetailsPage.isConditionVisible(), "Condition is not visible");
+        Assert.assertTrue(productDetailsPage.isBrandVisible(), "Brand is not visible");
+	}
 	
 	
 	
